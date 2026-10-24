@@ -2,9 +2,19 @@
 
 70秒、縦型1080×1920、30fps、H.264/AAC MP4。ナレーションなし。全編独自生成CG、日英字幕、生成アンビエント音楽・移動効果音付き。6場面を加減速する透視投影、回転、奥行き、縮小、発光、1.15秒クロスフェードで接続する。
 
+## 第1号の完成結果
+
+GitHub Actionsで制作・検証成功。70.0秒、1080×1920、30fps、H.264/AAC、50,933,601 bytes（約50.9MB）。15項目すべて合格。
+
+- [完成MP4と代表フレームをダウンロード（Artifact ZIP）](https://github.com/shirura1-a11y/space-video-maker/actions/runs/40143362931/artifacts/12579881978)
+- [成功したActions実行](https://github.com/shirura1-a11y/space-video-maker/actions/runs/40143362931)
+- [Actionsでの品質検証結果](reports/actions_quality_report.json)
+
+ArtifactはGitHubログインが必要。ZIP内の `output/space_001.mp4` が完成動画。保持期限は2026年11月1日08:38頃（日本時間）。期限後は手動実行で再生成できる。Release添付は選択式で実装済みだが、この初回実行では公開していない。
+
 ## GitHub Actions
 
-このフォルダの内容をリポジトリ直下へ保存する。Actions → Render Space 001 → Run workflow。完了後、実行ページのArtifactsから `space-001` をダウンロードする（GitHubへのログインが必要、保持7日）。MP4は通常のGit履歴には入れない。
+`main` への render.py・verify.py・requirements.txt・workflow の更新でも自動実行する。手動実行は Actions → Render Space 001 → Run workflow。完了後、実行ページのArtifactsから `space-001` をダウンロードする（GitHubへのログインが必要、保持7日）。MP4は通常のGit履歴には入れない。
 
 `publish_release` は既定でオフ。外部公開の承認がある場合だけオンにすると、ReleaseにもMP4と検証結果を添付する。公開リポジトリのReleaseは外部公開される。リポジトリ設定がActionsと必要なcontents:write権限を許可している必要がある。MP4はReleaseの単一ファイル2GiB制限より十分小さい想定で、実測サイズはquality_report.json参照。Actionsの利用枠・Artifact容量はアカウント契約によるため、有料枠を有効にしないこと。私有リポジトリでは無料残量を確認してから実行する。
 
