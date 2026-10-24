@@ -1,0 +1,62 @@
+name: Render Space 001
+on:
+  push:
+    branches: [main]
+    paths: [render.py, verify.py, requirements.txt, .github/workflows/render.yml]
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: 'Releaseへ公開する（公開リポジトリでは外部公開。承認済みの場合のみ選択）'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: space001-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install free dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-cjk
+          python -m pip install -r requirements.txt
+      - name: Render and validate full HD
+        run: python render.py
+      - name: Upload video and quality evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-001
+          path: |
+            output/space_001.mp4
+            output/frame_*.jpg
+            output/*report.json
+            output/layout.json
+            credits.md
+          if-no-files-found: error
+          retention-days: 7
+  release:
+    if: inputs.publish_release
+    needs: render
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: space-001
+          path: artifact
+      - name: Attach MP4 to Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "space-001-${GITHUB_RUN_NUMBER}" artifact/output/space_001.mp4 artifact/output/quality_report.json artifact/credits.md --title '地球から宇宙の果てへ' --notes 'Original procedural CG and generated audio. Not to scale. See credits.md.'
