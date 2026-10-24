@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "checks": {
+    "duration": true,
+    "resolution": true,
+    "fps": true,
+    "video_codec": true,
+    "audio_codec": true,
+    "subtitle_bounds": true,
+    "full_decode": true,
+    "nonblack_1s": true,
+    "nonblack_8s": true,
+    "nonblack_22s": true,
+    "nonblack_36s": true,
+    "nonblack_50s": true,
+    "nonblack_64s": true,
+    "audio_not_silent": true,
+    "audio_no_clipping": true
+  },
+  "duration_seconds": 70.0,
+  "bytes": 50933600,
+  "resolution": [
+    1080,
+    1920
+  ],
+  "fps": "30/1",
+  "audio_peak": 0.8218019604682922,
+  "scene_samples": {
+    "1": {
+      "scene_lit_fraction": 1.0,
+      "mean": 102.68091168091168
+    },
+    "8": {
+      "scene_lit_fraction": 0.15735042735042734,
+      "mean": 13.69394586894587
+    },
+    "22": {
+      "scene_lit_fraction": 0.4753846153846154,
+      "mean": 16.091267806267805
+    },
+    "36": {
+      "scene_lit_fraction": 0.17952991452991454,
+      "mean": 12.87420227920228
+    },
+    "50": {
+      "scene_lit_fraction": 0.33726495726495725,
+      "mean": 15.757421652421652
+    },
+    "64": {
+      "scene_lit_fraction": 0.4421794871794872,
+      "mean": 19.67454415954416
+    }
+  },
+  "note": "Final 68–70s fade is intentional; CG positions and sizes are schematic."
+}
